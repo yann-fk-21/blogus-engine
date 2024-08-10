@@ -5,7 +5,7 @@ exports.storage = multer.diskStorage({
     return callback(null, 'images');
   },
   filename: (req, file, callback) => {
-    return callback(null, new Date.now() + '-' + file.originalname);
+    return callback(null, new Date().toISOString() + '-' + file.originalname);
   },
 });
 
