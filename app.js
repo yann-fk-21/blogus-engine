@@ -10,6 +10,7 @@ const multerHelpers = require('./utils/multer-helper');
 
 const authRoutes = require('./modules/auth/auth-routes');
 const articleRoutes = require('./modules/article/routes');
+const categoryRoutes = require('./modules/category/routes');
 
 const app = express();
 
@@ -36,6 +37,7 @@ app.use((req, res, next) => {
 
 app.use('/api/v1', authRoutes);
 app.use('/api/v1', articleRoutes);
+app.use('/api/v1', categoryRoutes);
 
 app.use((error, req, res, next) => {
   const message = error.message;
