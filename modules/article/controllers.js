@@ -1,5 +1,31 @@
-const Article = require('./article');
 const { validationResult } = require('express-validator');
+
+const Article = require('./article');
+
+exports.getArticles = async (req, res, next) => {
+  const page = req.query.page || 1;
+
+  try {
+    let totalItems = await Article.find().countDocuments();
+    const ITEMS_PER_PAGE = 20;
+
+    const articles = await Article.find()
+      .skip((page - 1) * ITEMS_PER_PAGE)
+      .limit(ITEMS_PER_PAGE);
+
+    if (!articles) {
+      return res.status(404).json({ message: 'Article not found!' });
+    }
+
+    return res.status(200).json({ totalItems: totalItems, articles: articles });
+  } catch (err) {
+    if (!err.statusCode) {
+      err.statusCode = 500;
+    }
+
+    next(err);
+  }
+};
 
 exports.createArticle = async (req, res, next) => {
   const articleTitle = req.body.title;
