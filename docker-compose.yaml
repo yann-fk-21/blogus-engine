@@ -1,0 +1,16 @@
+version: '3'
+services:
+  blogus:
+    container_name: blogus-cn
+    build: ./
+    ports:
+      - 8080:8080
+    volumes:
+      - ./:/app
+      - /app/node_modules
+      - images:/app/images
+    env_file:
+      - ./.env
+
+volumes:
+  images:
